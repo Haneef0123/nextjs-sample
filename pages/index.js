@@ -6,11 +6,13 @@ import { MongoClient } from "mongodb";
  }
 
  export async function getStaticProps(){
+    console.log('entered here');
     const client = await MongoClient.connect('mongodb+srv://new-user_31:Thunderbird089@cluster0.yxn3uj8.mongodb.net/?retryWrites=true&w=majority')
         const db = client.db();
 
         const meetupsCollection = db.collection('meetups');
         const meetups = await meetupsCollection.find().toArray();
+        console.log('meetups', meetups);
         client.close();
      return {
         props: {
@@ -21,7 +23,7 @@ import { MongoClient } from "mongodb";
                 id: meetup._id.toString()
             }))
         },
-        revalidate: 20
+        revalidate: 5
      }
  }
 
